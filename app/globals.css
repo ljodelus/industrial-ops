@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+@theme {
+  /* Backgrounds */
+  --color-scada-bg:       #0d0f14;
+  --color-scada-surface:  #141720;
+  --color-scada-panel:    #1a1d2e;
+  --color-scada-border:   #1f2433;
+
+  /* Operational states */
+  --color-status-ok:      #00e676;
+  --color-status-warning: #ffa726;
+  --color-status-alarm:   #ef5350;
+  --color-status-offline: #546e7a;
+  --color-status-idle:    #78909c;
+
+  /* Accents */
+  --color-accent-primary: #4fc3f7;
+  --color-accent-gold:    #e8a23a;
+
+  /* Text */
+  --color-text-primary:   #e8eaf6;
+  --color-text-muted:     #6b738a;
+  --color-text-value:     #ffffff;
+
+  /* Typography */
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+  --font-ui:   'Inter', 'DM Sans', sans-serif;
+
+  /* Border radius — HMI style, minimal rounding */
+  --radius-scada: 2px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Industrial scrollbar */
+::-webkit-scrollbar        { width: 6px; height: 6px; }
+::-webkit-scrollbar-track  { background: #0d0f14; }
+::-webkit-scrollbar-thumb  { background: #1f2433; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #4fc3f7; }
+
+/* Real-time values */
+.value-display {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.05em;
+}
+
+/* Alarm blink */
+@keyframes alarm-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+.alarm-blink {
+  animation: alarm-blink 1s ease-in-out infinite;
+}
+
+/* Event log — newest event slide-in */
+@keyframes event-slide-in {
+  from { transform: translateY(-6px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+.event-slide-in {
+  animation: event-slide-in 0.25s ease-out;
+}
+
+/* Status indicator */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* Alarm row flash + slide in */
+@keyframes alarm-row-enter {
+  0%   { transform: translateY(-8px); opacity: 0; background-color: rgba(239, 83, 80, 0.10); }
+  50%  { background-color: rgba(239, 83, 80, 0.10); }
+  100% { transform: translateY(0);    opacity: 1;  background-color: transparent; }
+}
+.alarm-row-enter {
+  animation: alarm-row-enter 0.6s ease-out forwards;
+}
+
+/* Safelist — force Tailwind v4 to generate dynamic utility classes used in components */
+@source inline("{bg,text,border}-{status-ok,status-warning,status-alarm,status-offline,status-idle,accent-primary,accent-gold}");
+@source inline("{bg,border}-{status-ok,status-warning,status-alarm,accent-primary}/{5,10,15,30,40}");
+@source inline("border-t-{status-ok,status-warning,status-alarm,status-offline,accent-primary,accent-gold}");
+@source inline("text-{status-ok,status-warning,status-alarm,status-offline,status-idle,accent-primary,accent-gold}");
+@source inline("border-{status-ok,status-warning,status-alarm,status-offline,status-idle,accent-primary,accent-gold}/{30}");
+@source inline("border-b-2 border-b-accent-primary");
+@source inline("ring-2 ring-accent-primary/60 ring-accent-primary");
+@source inline("hover:border-accent-primary/60 border-accent-primary/60");

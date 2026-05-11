@@ -1,0 +1,19 @@
+export default function RecipesLoading() {
+  return (
+    <div className="flex flex-col gap-6">
+      <div className="h-8 w-40 bg-scada-surface rounded-scada animate-pulse" />
+      <div className="bg-scada-surface border border-scada-border rounded-scada overflow-hidden">
+        <div className="h-10 bg-scada-panel border-b border-scada-border" />
+        {Array.from({ length: 3 }).map((_, i) => (
+          <div key={i} className="h-12 border-b border-scada-border px-4 flex items-center gap-6">
+            <div className="flex-1 h-4 bg-scada-panel rounded-scada animate-pulse" />
+            <div className="w-10 h-4 bg-scada-panel rounded-scada animate-pulse" />
+            <div className="w-10 h-4 bg-scada-panel rounded-scada animate-pulse" />
+            <div className="w-24 h-4 bg-scada-panel rounded-scada animate-pulse" />
+          </div>
+        ))}
+      </div>
+      <div className="h-40 bg-scada-surface border border-scada-border rounded-scada animate-pulse" />
+    </div>
+  )
+}
